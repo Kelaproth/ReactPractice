@@ -4,12 +4,13 @@ import { Card, CardImg, CardText, CardBody, CardTitle,Breadcrumb, BreadcrumbItem
 import { Link } from 'react-router-dom'; 
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderDish({dish}) {
     if (dish != null) {
         return(
             <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardText>{dish.description}</CardText>
@@ -24,7 +25,7 @@ function RenderDish({dish}) {
     }
 }
 
-function RenderComments({comments, addComment, dishId}) {
+function RenderComments({comments, postComment, dishId}) {
     const commentList = comments.map((comment) => {
         return (
             <div key={comment.id}>
@@ -40,7 +41,7 @@ function RenderComments({comments, addComment, dishId}) {
             <ul className="list-unstyled">
                 <li>{commentList}</li>
             </ul>
-            <CommentForm dishId={dishId} addComment={addComment} />
+            <CommentForm dishId={dishId} postComment={postComment} />
         </div>
     );
     
@@ -84,7 +85,7 @@ const DishDetail = (props) => {
                     </div>
                     <div className="col-12 col-md-5 m-1">
                         <RenderComments comments={props.comments}
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             dishId={props.dish.id}/>
                     </div>
                 </div>
@@ -122,7 +123,7 @@ class CommentForm extends Component {
 
     handleSubmit(values) {
         this.toggleCommentModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render() {
