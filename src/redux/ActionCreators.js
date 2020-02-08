@@ -86,7 +86,7 @@ export const postFeedback = (firstname, lastname, telnum, email, agree, contactT
     })
     .then(response => response.json())
     .then(response => {dispatch(addFeedback(response))
-    alert("Tank you for your feed back!\n" + JSON.stringify(newFeedback))
+    alert("Tank you for your feed back!\n" + JSON.stringify(response))
     })
     .catch(error => {console.log('Post feedback' + error.message);
     alert('Your feedback could not be posted\n Error: ' + error.message)});
